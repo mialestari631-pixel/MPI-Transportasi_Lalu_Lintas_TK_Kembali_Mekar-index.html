@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MPI Transportasi & Lalu Lintas | TK Kembali Mekar</title>
+<style>
+:root{--navy:#16324f;--blue:#2676c9;--sky:#eaf7ff;--yellow:#ffd447;--green:#37a66b;--red:#e84b4b;--orange:#ff914d;--purple:#7957c8;--ink:#243447;--white:#fff;--shadow:0 8px 22px #16324f18}
+*{box-sizing:border-box}body{margin:0;font-family:"Trebuchet MS",Arial,sans-serif;color:var(--ink);background:linear-gradient(135deg,#eaf7ff,#fff8df);min-height:100vh}
+header{background:linear-gradient(100deg,#1b6eb7,#31a8c5);color:white;padding:18px 5%;display:flex;gap:15px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:12px}.logo{font-size:2.5rem;background:#ffffff2b;border-radius:18px;padding:8px 12px}.brand h1{margin:0;font-size:clamp(1.1rem,2.7vw,1.8rem)}.brand p{margin:4px 0 0;font-size:.95rem}
+.badge{background:#fff;color:#17608e;padding:8px 13px;border-radius:30px;font-weight:bold;font-size:.9rem}
+main{max-width:1100px;margin:0 auto;padding:22px 16px 40px}.hero{background:#fff;border-radius:26px;padding:24px;box-shadow:var(--shadow);display:grid;grid-template-columns:1.4fr 1fr;gap:16px;align-items:center}
+.hero h2{font-size:clamp(1.6rem,4vw,2.5rem);color:var(--navy);margin:0 0 8px}.hero p{line-height:1.6;font-size:1.05rem}.hero-art{font-size:clamp(3rem,8vw,6rem);text-align:center;background:var(--sky);border-radius:22px;padding:18px}
+nav{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0}.tab,button{border:0;border-radius:14px;padding:12px 16px;font-weight:bold;cursor:pointer;font-size:1rem;transition:.15s}.tab{background:#fff;color:var(--navy);box-shadow:0 3px 9px #16324f10}.tab.active{background:var(--navy);color:white}.tab:hover,button:hover{transform:translateY(-2px)}
+.panel{display:none;background:#fff;border-radius:24px;padding:22px;box-shadow:var(--shadow);margin-top:12px}.panel.active{display:block}.panel h2{color:var(--navy);margin-top:0}.muted{color:#617184;line-height:1.5}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px}.card{border:3px solid #e5f1fa;border-radius:20px;padding:17px;text-align:center;background:#fcfeff;cursor:pointer;min-height:175px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:7px}.card:hover,.card.selected{border-color:var(--blue);background:#eff9ff}.emoji{font-size:3.4rem;line-height:1.15}.card h3{margin:2px 0;color:var(--navy)}.card p{margin:0;font-size:.95rem;line-height:1.4}.tip{background:#fff7d6;border-left:6px solid var(--yellow);padding:14px 16px;border-radius:12px;line-height:1.5;margin-top:15px}
+button.primary{background:var(--blue);color:white}button.secondary{background:#eaf2fa;color:var(--navy)}button.green{background:var(--green);color:white}button.orange{background:var(--orange);color:#43250f}
+.traffic-layout{display:grid;grid-template-columns:1fr 1.2fr;gap:20px;align-items:center}.signal{background:#253344;border-radius:28px;width:130px;padding:15px;margin:auto;display:flex;flex-direction:column;gap:12px;box-shadow:inset 0 0 0 5px #394d61}.lamp{border:4px solid #718092;width:78px;height:78px;border-radius:50%;margin:auto;background:#45505d;opacity:.45}.lamp.on{opacity:1;box-shadow:0 0 20px currentColor}.lamp.red.on{background:#ff4242;color:#ff4242}.lamp.yellow.on{background:#ffd447;color:#ffd447}.lamp.green.on{background:#40d783;color:#40d783}.signal-buttons{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:14px}
+.message{padding:15px;border-radius:14px;background:#eef8ff;font-size:1.1rem;line-height:1.5;margin:12px 0;min-height:55px}.road{background:linear-gradient(#a9df9c 0 24%,#555e68 24% 76%,#a9df9c 76%);border-radius:18px;padding:24px 10px;display:flex;align-items:center;justify-content:space-around;min-height:130px;position:relative;overflow:hidden}.road:after{content:"";position:absolute;left:0;right:0;top:50%;border-top:5px dashed white}.road span{font-size:2.5rem;z-index:1;background:#ffffffde;border-radius:12px;padding:5px}
+.activity-box{background:#f3f8ff;border-radius:18px;padding:18px;margin:12px 0}.choices{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0}.choice{background:#fff;border:2px solid #d7e6f3;color:var(--navy)}.choice.correct{background:#ddf8e8;border-color:var(--green)}.choice.wrong{background:#ffe8e8;border-color:var(--red)}
+.question{font-size:1.18rem;font-weight:bold;line-height:1.5}.feedback{font-weight:bold;min-height:26px;margin:10px 0}.progress{height:12px;background:#e4edf4;border-radius:20px;overflow:hidden;margin:14px 0}.progress div{height:100%;width:0;background:var(--green);transition:.3s}
+footer{text-align:center;padding:22px;color:#637589;font-size:.9rem}.hidden{display:none!important}
+@media(max-width:700px){.hero,.traffic-layout{grid-template-columns:1fr}.hero-art{order:-1}.tab{flex:1 1 40%}.panel{padding:16px}.signal{width:110px}.lamp{width:65px;height:65px}}
+</style>
+</head>
+<body>
+<header>
+ <div class="brand"><div class="logo">🚌</div><div><h1>MPI Transportasi & Lalu Lintas</h1><p>TK Kembali Mekar • Kelompok B • Usia 5–6 Tahun</p></div></div>
+ <div class="badge">Kurikulum Merdeka · Fase Fondasi</div>
+</header>
+<main>
+<section class="hero">
+ <div><h2>Halo, Sahabat Hebat! 🚦</h2><p>Ayo mengenal kendaraan, tempat kendaraan berjalan, dan aturan lalu lintas. Kita akan belajar sambil bermain. Siap? Klik menu di bawah ini!</p><button class="primary" onclick="showTab('kenal')">Mulai Belajar ▶</button> <button class="secondary" onclick="speak('Halo anak-anak! Ayo belajar transportasi dan lalu lintas dengan gembira.')">🔊 Dengarkan</button></div>
+ <div class="hero-art">🚗 🚲 🚂<br>🚤 ✈️ 🚦</div>
+</section>
+<nav aria-label="Menu pembelajaran">
+ <button class="tab active" data-tab="kenal" onclick="showTab('kenal')">🚘 Kenal Kendaraan</button>
+ <button class="tab" data-tab="jalan" onclick="showTab('jalan')">🛣️ Tempatnya</button>
+ <button class="tab" data-tab="lampu" onclick="showTab('lampu')">🚦 Lampu Lalu Lintas</button>
+ <button class="tab" data-tab="main" onclick="showTab('main')">🎮 Ayo Bermain</button>
+ <button class="tab" data-tab="kuis" onclick="showTab('kuis')">⭐ Kuis Ceria</button>
+</nav>
+
+<section id="kenal" class="panel active">
+ <h2>1. Yuk, Kenali Kendaraan!</h2><p class="muted">Tekan kartu kendaraan untuk mendengar nama dan kegunaannya.</p>
+ <div class="grid">
+  <div class="card" onclick="learn('🚗','Mobil','Mobil membawa orang di jalan raya. Kita duduk dan memakai sabuk pengaman.')"><div class="emoji">🚗</div><h3>Mobil</h3><p>Membawa orang di jalan.</p></div>
+  <div class="card" onclick="learn('🚌','Bus','Bus membawa banyak penumpang. Kita naik dan turun di tempat yang aman.')"><div class="emoji">🚌</div><h3>Bus</h3><p>Membawa banyak penumpang.</p></div>
+  <div class="card" onclick="learn('🏍️','Sepeda motor','Sepeda motor berjalan di jalan. Pengendara dan penumpang harus memakai helm.')"><div class="emoji">🏍️</div><h3>Sepeda Motor</h3><p>Jangan lupa memakai helm.</p></div>
+  <div class="card" onclick="learn('🚲','Sepeda','Sepeda dikayuh dengan kaki. Bersepeda di tempat aman bersama orang dewasa.')"><div class="emoji">🚲</div><h3>Sepeda</h3><p>Dikayuh dengan kaki.</p></div>
+  <div class="card" onclick="learn('🚂','Kereta api','Kereta api berjalan di atas rel dan dapat membawa banyak orang.')"><div class="emoji">🚂</div><h3>Kereta Api</h3><p>Berjalan di atas rel.</p></div>
+  <div class="card" onclick="learn('✈️','Pesawat','Pesawat terbang di udara untuk membawa orang ke tempat yang jauh.')"><div class="emoji">✈️</div><h3>Pesawat</h3><p>Terbang di udara.</p></div>
+  <div class="card" onclick="learn('🚤','Kapal','Kapal atau perahu bergerak di air.')"><div class="emoji">🚤</div><h3>Kapal</h3><p>Bergerak di air.</p></div>
+  <div class="card" onclick="learn('🚑','Ambulans','Ambulans membantu membawa orang yang sakit ke rumah sakit.')"><div class="emoji">🚑</div><h3>Ambulans</h3><p>Membantu orang sakit.</p></div>
+ </div>
+ <div id="learnInfo" class="message">Pilih salah satu kartu kendaraan untuk mengetahui kegunaannya.</div>
+</section>
+
+<section id="jalan" class="panel">
+ <h2>2. Di Mana Kendaraan Bergerak?</h2><p class="muted">Ayo pasangkan kendaraan dengan tempatnya!</p>
+ <div class="grid">
+  <div class="card"><div class="emoji">🛣️</div><h3>Jalan Raya</h3><p>Mobil, bus, motor, sepeda</p></div>
+  <div class="card"><div class="emoji">🛤️</div><h3>Rel Kereta</h3><p>Kereta api</p></div>
+  <div class="card"><div class="emoji">🌊</div><h3>Air</h3><p>Kapal dan perahu</p></div>
+  <div class="card"><div class="emoji">☁️</div><h3>Udara</h3><p>Pesawat terbang</p></div>
+ </div>
+ <div class="activity-box"><div class="question" id="placeQ">Kendaraan apakah yang berjalan di atas rel?</div><div class="choices" id="placeChoices"></div><div id="placeFeedback" class="feedback" aria-live="polite"></div><button class="secondary" onclick="nextPlace()">Soal Berikutnya ➜</button></div>
+</section>
+
+<section id="lampu" class="panel">
+ <h2>3. Belajar Lampu Lalu Lintas 🚦</h2>
+ <div class="traffic-layout">
+  <div><div class="signal"><div id="redLamp" class="lamp red on"></div><div id="yellowLamp" class="lamp yellow"></div><div id="greenLamp" class="lamp green"></div></div>
+   <div class="signal-buttons"><button class="primary" onclick="setLight('red')">🔴 Merah</button><button class="orange" onclick="setLight('yellow')">🟡 Kuning</button><button class="green" onclick="setLight('green')">🟢 Hijau</button></div>
+  </div>
+  <div><div id="lightMessage" class="message">🔴 MERAH artinya BERHENTI. Kita menunggu dengan aman.</div><div class="road"><span>🚶</span><span>🚗</span><span>🚲</span></div><div class="tip"><b>Ingat, ya!</b><br>🚸 Menyeberanglah bersama orang dewasa. Berhenti di tepi jalan, lihat kanan dan kiri, lalu menyeberang di tempat penyeberangan jika aman. Jangan bermain di jalan raya.</div></div>
+ </div>
+</section>
+
+<section id="main" class="panel">
+ <h2>4. Ayo Bermain!</h2><p class="muted">Baca pertanyaannya, lalu pilih jawaban yang tepat.</p>
+ <div class="activity-box"><div class="question" id="gameQ">Kita akan naik pesawat. Pesawat bergerak di mana?</div><div class="choices" id="gameChoices"></div><div id="gameFeedback" class="feedback" aria-live="polite"></div><button class="primary" onclick="nextGame()">Pertanyaan Berikutnya ➜</button></div>
+ <div class="tip">💡 <b>Aktivitas bersama guru:</b> tirukan gerakan kendaraan: tangan seperti sayap pesawat, tangan memutar seperti roda, atau tubuh bergoyang seperti kapal. Pastikan ruang bermain aman.</div>
+</section>
+
+<section id="kuis" class="panel">
+ <h2>5. Kuis Ceria ⭐</h2><p class="muted">Jawab 5 pertanyaan. Tidak apa-apa jika salah—kita belajar bersama!</p>
+ <div class="progress"><div id="quizProgress"></div></div>
+ <div class="activity-box"><div id="quizCount" class="muted">Pertanyaan 1 dari 5</div><div class="question" id="quizQ"></div><div class="choices" id="quizChoices"></div><div id="quizFeedback" class="feedback" aria-live="polite"></div><button id="quizNext" class="primary" onclick="nextQuiz()" disabled>Selanjutnya ➜</button><div id="quizResult" class="hidden"></div></div>
+</section>
+</main>
+<footer>Media Pembelajaran Interaktif • TK Kembali Mekar • Kelompok B • Tema Transportasi dan Lalu Lintas</footer>
+<script>
+function speak(text){if(!('speechSynthesis'in window)){alert(text);return}speechSynthesis.cancel();let u=new SpeechSynthesisUtterance(text);u.lang='id-ID';u.rate=.88;speechSynthesis.speak(u)}
+function showTab(id){document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('active',p.id===id));document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('active',b.dataset.tab===id));if(id==='kuis'&&!quizStarted)renderQuiz();window.scrollTo({top:0,behavior:'smooth'})}
+function learn(emoji,name,desc){document.getElementById('learnInfo').innerHTML='<b style="font-size:1.25rem">'+emoji+' '+name+'</b><br>'+desc+'<br><button class="secondary" onclick="speak('+JSON.stringify(name+'. '+desc)+')">🔊 Dengarkan lagi</button>';speak(name+'. '+desc)}
+const placeData=[
+ {q:'Kendaraan apakah yang berjalan di atas rel?',opts:['🚂 Kereta api','✈️ Pesawat','🚤 Kapal'],a:0,why:'Benar! Kereta api berjalan di atas rel.'},
+ {q:'Kendaraan apakah yang bergerak di air?',opts:['🚌 Bus','🚤 Kapal','🚲 Sepeda'],a:1,why:'Hebat! Kapal bergerak di air.'},
+ {q:'Kendaraan apakah yang terbang di udara?',opts:['🚗 Mobil','🚂 Kereta api','✈️ Pesawat'],a:2,why:'Betul! Pesawat terbang di udara.'},
+ {q:'Bus dan mobil berjalan di ...',opts:['🛣️ Jalan raya','🌊 Laut','☁️ Awan'],a:0,why:'Pintar! Bus dan mobil berjalan di jalan raya.'}
+];let placeIndex=0;
+function renderPlace(){let d=placeData[placeIndex];document.getElementById('placeQ').textContent=d.q;document.getElementById('placeFeedback').textContent='';let c=document.getElementById('placeChoices');c.innerHTML='';d.opts.forEach((o,i)=>{let b=document.createElement('button');b.className='choice';b.textContent=o;b.onclick=()=>{c.querySelectorAll('button').forEach(x=>x.disabled=true);if(i===d.a){b.classList.add('correct');document.getElementById('placeFeedback').textContent='🌟 '+d.why;speak(d.why)}else{b.classList.add('wrong');document.getElementById('placeFeedback').textContent='Coba lagi nanti, ya! Jawaban yang benar: '+d.opts[d.a]}};c.appendChild(b)})}
+function nextPlace(){placeIndex=(placeIndex+1)%placeData.length;renderPlace()}
+function setLight(color){['red','yellow','green'].forEach(c=>document.getElementById(c+'Lamp').classList.toggle('on',c===color));let msgs={red:'🔴 MERAH artinya BERHENTI. Tunggu dengan aman.',yellow:'🟡 KUNING artinya HATI-HATI. Bersiap dan perhatikan keadaan.',green:'🟢 HIJAU artinya JALAN bagi kendaraan sesuai arah lampu. Pejalan kaki tetap menyeberang dengan aman dan mengikuti arahan orang dewasa.'};document.getElementById('lightMessage').textContent=msgs[color];speak(msgs[color])}
+const gameData=[
+ {q:'Pesawat bergerak di mana?',opts:['☁️ Udara','🛤️ Rel','🌊 Air'],a:0,why:'Ya, pesawat terbang di udara!'},
+ {q:'Apa yang harus dipakai saat naik sepeda motor?',opts:['🧢 Topi saja','🪖 Helm','🩴 Sandal'],a:1,why:'Benar, gunakan helm yang terpasang dengan baik.'},
+ {q:'Apa arti lampu merah?',opts:['Berhenti','Berlari','Boleh bermain di jalan'],a:0,why:'Betul, lampu merah berarti berhenti.'},
+ {q:'Siapa yang membantu membawa orang sakit?',opts:['🚑 Ambulans','🚜 Traktor','🚲 Sepeda'],a:0,why:'Hebat, ambulans membantu membawa orang sakit.'}
+];let gameIndex=0;
+function renderGame(){let d=gameData[gameIndex];document.getElementById('gameQ').textContent=d.q;document.getElementById('gameFeedback').textContent='';let c=document.getElementById('gameChoices');c.innerHTML='';d.opts.forEach((o,i)=>{let b=document.createElement('button');b.className='choice';b.textContent=o;b.onclick=()=>{c.querySelectorAll('button').forEach(x=>x.disabled=true);if(i===d.a){b.classList.add('correct');document.getElementById('gameFeedback').textContent='🎉 '+d.why;speak(d.why)}else{b.classList.add('wrong');document.getElementById('gameFeedback').textContent='Belum tepat. Yuk, ingat kembali!';}};c.appendChild(b)})}
+function nextGame(){gameIndex=(gameIndex+1)%gameData.length;renderGame()}
+const quizData=[
+ {q:'Kendaraan yang berjalan di atas rel adalah ...',o:['Kereta api','Kapal','Sepeda'],a:0},
+ {q:'Kapal bergerak di ...',o:['Udara','Air','Rel'],a:1},
+ {q:'Lampu lalu lintas warna merah artinya ...',o:['Jalan terus','Berhenti','Berlari'],a:1},
+ {q:'Saat naik sepeda motor, kita memakai ...',o:['Helm','Mahkota','Kacamata renang'],a:0},
+ {q:'Saat menyeberang jalan, anak harus ...',o:['Sendirian sambil berlari','Bermain di jalan','Bersama orang dewasa dan berhati-hati'],a:2}
+];let quizIndex=0,quizScore=0,quizStarted=false,quizAnswered=false;
+function renderQuiz(){quizStarted=true;quizIndex=0;quizScore=0;quizAnswered=false;document.getElementById('quizResult').classList.add('hidden');drawQuiz()}
+function drawQuiz(){let d=quizData[quizIndex];document.getElementById('quizCount').textContent='Pertanyaan '+(quizIndex+1)+' dari '+quizData.length;document.getElementById('quizProgress').style.width=(quizIndex/quizData.length*100)+'%';document.getElementById('quizQ').textContent=d.q;document.getElementById('quizFeedback').textContent='';document.getElementById('quizNext').disabled=true;document.getElementById('quizNext').textContent=quizIndex===quizData.length-1?'Lihat Hasil ⭐':'Selanjutnya ➜';let c=document.getElementById('quizChoices');c.innerHTML='';quizAnswered=false;d.o.forEach((o,i)=>{let b=document.createElement('button');b.className='choice';b.textContent=o;b.onclick=()=>{if(quizAnswered)return;quizAnswered=true;c.querySelectorAll('button').forEach(x=>x.disabled=true);if(i===d.a){quizScore++;b.classList.add('correct');document.getElementById('quizFeedback').textContent='🌟 Hebat! Jawabanmu benar.';speak('Hebat! Jawabanmu benar.')}else{b.classList.add('wrong');c.children[d.a].classList.add('correct');document.getElementById('quizFeedback').textContent='Tidak apa-apa. Jawaban yang benar: '+d.o[d.a];speak('Tidak apa-apa. Kita belajar bersama.')}document.getElementById('quizNext').disabled=false};c.appendChild(b)})}
+function nextQuiz(){if(!quizAnswered)return;if(quizIndex<quizData.length-1){quizIndex++;drawQuiz()}else{document.getElementById('quizProgress').style.width='100%';document.getElementById('quizQ').textContent='Kuis selesai!';document.getElementById('quizChoices').innerHTML='';document.getElementById('quizFeedback').textContent='';document.getElementById('quizNext').disabled=false;document.getElementById('quizNext').textContent='Ulangi Kuis ↻';let r=document.getElementById('quizResult');r.classList.remove('hidden');let msg=quizScore>=4?'Luar biasa! Kamu hebat mengenal transportasi dan keselamatan.':quizScore>=3?'Bagus sekali! Ayo terus berlatih.':'Terima kasih sudah mencoba. Yuk, belajar lagi bersama guru!';r.innerHTML='<div class="message"><div style="font-size:2rem">🏆 '+quizScore+' dari '+quizData.length+'</div><b>'+msg+'</b></div><button class="green" onclick="renderQuiz()">Main Lagi</button>';document.getElementById('quizNext').onclick=()=>renderQuiz();speak(msg)}}
+renderPlace();renderGame();
+</script>
+</body>
+</html>
